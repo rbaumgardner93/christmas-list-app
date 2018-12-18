@@ -1,25 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Heading from './Heading';
+import ListWrapper from './ListWrapper';
+
 import './App.css';
 
 class App extends Component {
+  state = {
+    listRows: [
+      {
+        name: ''
+      }
+    ],
+    christmasList: {}
+  };
+
+  addListRow = row => {
+    const listRows = { ...this.state.listRows };
+    listRows[`row${Date.now()}`] = row;
+    console.log(listRows);
+    this.setState({
+      listRows
+    });
+  };
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Heading />
+        <ListWrapper
+          addListRow={this.addListRow}
+          listItems={this.state.listRows}
+        />
       </div>
     );
   }
