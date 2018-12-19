@@ -3,7 +3,18 @@ import styled from 'styled-components';
 
 const Titles = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+
+  h3:not(:last-of-type) {
+    display: flex;
+    justify-content: center;
+    max-width: 135px;
+    width: 100%;
+  }
+
+  h3:nth-child(4n) {
+    padding-left: 1rem;
+  }
 `;
 
 class ListRowTitles extends Component {

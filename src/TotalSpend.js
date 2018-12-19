@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Spend = styled.div`
@@ -6,15 +6,18 @@ const Spend = styled.div`
   width: 100%;
 `;
 
-class TotalSpend extends Component {
-  render() {
-    return (
-      <Spend>
-        <h3>How Much Do You Want to Spend?</h3>
-        <input type="text" placeholder="$" />
-      </Spend>
-    );
-  }
-}
+const TotalSpend = ({ item, onChange }) => {
+  return (
+    <Spend>
+      <h3>How Much Do You Want to Spend?</h3>
+      <input
+        type="number"
+        placeholder="$"
+        onChange={e => onChange(e)}
+        value={item.value}
+      />
+    </Spend>
+  );
+};
 
 export default TotalSpend;
