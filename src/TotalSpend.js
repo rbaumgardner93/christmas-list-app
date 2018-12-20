@@ -13,6 +13,7 @@ const TotalSpend = ({ item, onChange }) => {
       <input
         type="number"
         placeholder="$"
+        min="0"
         onChange={e => onChange(e)}
         value={item.value}
       />

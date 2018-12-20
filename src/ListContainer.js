@@ -19,7 +19,7 @@ const ChristmasListContainer = styled.div`
 const defaultItemState = {
   name: '',
   planned: 0,
-  spent: 0.0,
+  spent: 0,
   giftIdeas: '',
   done: false
 };
@@ -34,28 +34,26 @@ class ListContainer extends Component {
 
   handleTotalSpendChange = e => {
     e.preventDefault();
-    let totalSpend = this.state.totalSpend;
-    totalSpend = e.target.value;
+    e.persist();
     this.setState(prev => {
       return {
-        items: {
-          ...prev.items
-        },
-        totalSpend
+        ...prev,
+        totalSpend: parseInt(e.target.value, 10)
       };
     });
   };
 
   handleInputChange = (e, id) => {
     e.preventDefault();
-    const originalItem = { ...this.state.items[id] };
-    originalItem[e.target.name] = e.target.value;
+    e.persist();
+    const updatedItem = { ...this.state.items[id], [e.target.name]: parseInt(e.target.value, 10) };
     this.setState(prev => {
       return {
+        ...prev,
         items: {
           ...prev.items,
-          [id]: originalItem
-        }
+          [id]: updatedItem
+        },
       };
     });
   };
@@ -65,6 +63,7 @@ class ListContainer extends Component {
     const id = Object.keys(this.state.items).length + 1;
     this.setState(prev => {
       return {
+        ...prev,
         items: {
           ...prev.items,
           [id]: defaultItemState
@@ -74,12 +73,20 @@ class ListContainer extends Component {
   };
 
   render() {
+    const totalPlanned = Object.keys(this.state.items).reduce((prev, key) =>  {
+      console.log('NaN:',!isNaN(Math.abs(this.state.items[key].planned)))
+      console.log('key:',Math.abs(this.state.items[key].planned))
+      console.log('prev:', prev)
+      return prev + Math.abs(this.state.items[key].planned);
+    }, 0);
+    const leftToSpend = this.state.totalSpend - totalPlanned;
     return (
       <ChristmasListContainer>
         <TotalSpend
           item={this.state.totalSpend}
           onChange={this.handleTotalSpendChange}
         />
+        {leftToSpend}
         <ListRowTitles />
         {Object.keys(this.state.items).map(id => {
           return (

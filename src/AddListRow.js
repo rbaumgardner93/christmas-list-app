@@ -25,6 +25,7 @@ const AddListRow = ({ id, item, onChange, onSubmit }) => {
         name="planned"
         placeholder="$"
         type="number"
+        min="0"
         value={item.planned}
         onChange={e => onChange(e, id)}
       />
@@ -32,6 +33,7 @@ const AddListRow = ({ id, item, onChange, onSubmit }) => {
         name="spent"
         placeholder="$"
         type="number"
+        min="0"
         value={item.spent}
         onChange={e => onChange(e, id)}
       />
