@@ -38,7 +38,7 @@ class ListContainer extends Component {
     this.setState(prev => {
       return {
         ...prev,
-        totalSpend: parseInt(e.target.value, 10)
+        totalSpend: parseFloat(e.target.value).toFixed(2)
       };
     });
   };
@@ -46,7 +46,7 @@ class ListContainer extends Component {
   handleInputChange = (e, id) => {
     e.preventDefault();
     e.persist();
-    const updatedItem = { ...this.state.items[id], [e.target.name]: parseInt(e.target.value, 10) };
+    const updatedItem = { ...this.state.items[id], [e.target.name]: parseFloat(e.target.value).toFixed(2) };
     this.setState(prev => {
       return {
         ...prev,
@@ -74,11 +74,9 @@ class ListContainer extends Component {
 
   render() {
     const totalPlanned = Object.keys(this.state.items).reduce((prev, key) =>  {
-      console.log('NaN:',!isNaN(Math.abs(this.state.items[key].planned)))
-      console.log('key:',Math.abs(this.state.items[key].planned))
-      console.log('prev:', prev)
       return prev + Math.abs(this.state.items[key].planned);
     }, 0);
+
     const leftToSpend = this.state.totalSpend - totalPlanned;
     return (
       <ChristmasListContainer>
@@ -86,7 +84,7 @@ class ListContainer extends Component {
           item={this.state.totalSpend}
           onChange={this.handleTotalSpendChange}
         />
-        {leftToSpend}
+        <p>Total left to spend: ${parseFloat(leftToSpend).toFixed(2)}</p>
         <ListRowTitles />
         {Object.keys(this.state.items).map(id => {
           return (

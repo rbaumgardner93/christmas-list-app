@@ -26,7 +26,7 @@ const AddListRow = ({ id, item, onChange, onSubmit }) => {
         placeholder="$"
         type="number"
         min="0"
-        value={item.planned}
+        value={!isNaN(item.planned.value) ? item.planed.value = 0 : item.planned.value}
         onChange={e => onChange(e, id)}
       />
       <input
@@ -34,7 +34,7 @@ const AddListRow = ({ id, item, onChange, onSubmit }) => {
         placeholder="$"
         type="number"
         min="0"
-        value={item.spent}
+        value={item.spent.value}
         onChange={e => onChange(e, id)}
       />
       <input

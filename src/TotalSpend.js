@@ -15,7 +15,7 @@ const TotalSpend = ({ item, onChange }) => {
         placeholder="$"
         min="0"
         onChange={e => onChange(e)}
-        value={item.value}
+        value={!isNaN(item.value) ? '' : item.value}
       />
     </Spend>
   );
