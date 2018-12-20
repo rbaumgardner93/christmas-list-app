@@ -10,7 +10,7 @@ const ChristmasListContainer = styled.div`
   margin: 0 auto;
   max-width: 800px;
 
-  button {
+  .ChristmasListContainer-addButton {
     width: 100px;
     align-self: flex-start;
   }
@@ -20,7 +20,6 @@ const defaultItemState = {
   name: '',
   planned: 0,
   spent: 0,
-  giftIdeas: '',
   done: false
 };
 
@@ -93,11 +92,10 @@ class ListContainer extends Component {
               id={id}
               item={this.state.items[id]}
               onChange={this.handleInputChange}
-              onSubmit={this.handleAddClick}
             />
           );
         })}
-        <button onClick={this.handleAddClick} type="submit">
+        <button className="ChristmasListContainer-addButton" type="submit" onClick={this.handleAddClick}>
           + Add Person
         </button>
       </ChristmasListContainer>

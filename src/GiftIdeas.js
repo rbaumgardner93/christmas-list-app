@@ -1,22 +1,30 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Gifts = styled.div`
-  padding: 1rem;
 
   input {
-    width: 200px;
+    width: 150px;
+  }
+
+  .GiftIdeas-addButton {
+    width: 50px;
+    margin-left: 1rem;
   }
 `;
 
-class GiftIdeas extends Component {
-  render() {
-    return (
-      <Gifts>
-        <input type="text" placeholder="Gift Idea" />
-      </Gifts>
-    );
-  }
+const GiftIdeas = ({onClick, value}) => {
+  return (
+    <Gifts>
+        <input
+        name="gift"
+        placeholder="Gift Ideas"
+        type="text"
+        value={value}
+      />
+      <button onClick={e => onClick(e)} className="GiftIdeas-addButton">+ Add</button>
+    </Gifts>
+  );
 }
 
 export default GiftIdeas;
