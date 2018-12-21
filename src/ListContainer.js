@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import uniqid from 'uniqid';
 import TotalSpend from './TotalSpend';
 import ListRowTitles from './ListRowTitles';
 import AddListRow from './AddListRow';
@@ -62,7 +63,7 @@ class ListContainer extends Component {
 
   handleAddClick = e => {
     e.preventDefault();
-    const id = Object.keys(this.state.items).length + 1;
+    const id = uniqid();
     this.setState(prev => {
       return {
         ...prev,

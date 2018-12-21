@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import uniqid from 'uniqid';
 import GiftIdeas from './GiftIdeas';
 
 const AddListRowForm = styled.form`
@@ -25,14 +26,16 @@ class AddListRow extends Component {
     }
   };
 
-  handleAddGift = (e, idea) => {
+  handleAddGift = e => {
     e.preventDefault();
-    const numberGifts = Object.keys(this.state.giftIdeas).length + 1;
+    const numberGifts = uniqid();
     this.setState(prev => {
       return {
         giftIdeas: {
           ...prev.giftIdeas,
-          [numberGifts]: ''
+          [numberGifts]: {
+            value: ''
+          }
         }
       };
     });
@@ -52,6 +55,17 @@ class AddListRow extends Component {
           [idea]: updatedGiftIdea
         }
       };
+    });
+  };
+
+  handleRemoveGift = (e, giftIndex) => {
+    e.preventDefault();
+    const updatedStateItem = Object.keys({ ...this.state.giftIdeas });
+    if (updatedStateItem.length > 1) {
+      updatedStateItem.splice(giftIndex, 1);
+    }
+    this.setState({
+      giftIdeas: updatedStateItem
     });
   };
 
@@ -86,14 +100,14 @@ class AddListRow extends Component {
           onChange={e => this.props.onChange(e, this.props.id)}
         />
         <div className="AddListRow-giftColumn">
-          {Object.keys(this.state.giftIdeas).map(idea => {
-            console.log(idea);
+          {Object.keys(this.state.giftIdeas).map((idea, index) => {
             return (
               <GiftIdeas
                 key={idea}
                 idea={idea}
-                onClick={this.handleAddGift}
                 onChange={this.handleGiftInputChange}
+                onClick={this.handleRemoveGift}
+                index={index}
               />
             );
           })}

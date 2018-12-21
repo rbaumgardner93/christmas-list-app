@@ -8,13 +8,12 @@ const Gifts = styled.div`
     margin-bottom: 0.5rem;
   }
 
-  .GiftIdeas-addButton {
-    width: 50px;
-    margin-left: 1rem;
+  .GiftIdea-remove {
+    margin-left: 0.5rem;
   }
 `;
 
-const GiftIdeas = ({ onChange, onClick, idea }) => {
+const GiftIdeas = ({ onChange, onClick, idea, index }) => {
   return (
     <Gifts>
       <input
@@ -24,6 +23,13 @@ const GiftIdeas = ({ onChange, onClick, idea }) => {
         onChange={e => onChange(e, idea)}
         value={idea.value}
       />
+      <button
+        key={idea}
+        onClick={e => onClick(e, index)}
+        className="GiftIdea-remove"
+      >
+        Remove
+      </button>
     </Gifts>
   );
 };
