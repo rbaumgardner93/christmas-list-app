@@ -12,8 +12,12 @@ const Titles = styled.div`
     width: 100%;
   }
 
+  h3:nth-child(3n) {
+    margin-right: 3rem;
+  }
+
   h3:nth-child(4n) {
-    padding-left: 1rem;
+    margin-right: 3rem;
   }
 `;
 

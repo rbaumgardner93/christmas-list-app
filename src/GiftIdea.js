@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Gifts = styled.div`
+const Gift = styled.div`
   input {
     width: 150px;
     padding: 5px;
@@ -13,25 +13,25 @@ const Gifts = styled.div`
   }
 `;
 
-const GiftIdeas = ({ onChange, onClick, idea, index }) => {
+const GiftIdea = ({ onChange, onClick, value, id, isRemoveDisabled }) => {
   return (
-    <Gifts>
+    <Gift>
       <input
         name="gift"
-        placeholder="Gift Ideas"
+        placeholder="Gift Idea"
         type="text"
-        onChange={e => onChange(e, idea)}
-        value={idea.value}
+        onChange={e => onChange(e, id)}
+        value={value}
       />
       <button
-        key={idea}
-        onClick={e => onClick(e, index)}
+        onClick={e => onClick(e, id)}
         className="GiftIdea-remove"
+        disabled={isRemoveDisabled}
       >
         Remove
       </button>
-    </Gifts>
+    </Gift>
   );
 };
 
-export default GiftIdeas;
+export default GiftIdea;

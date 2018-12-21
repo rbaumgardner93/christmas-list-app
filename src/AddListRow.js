@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import uniqid from 'uniqid';
-import GiftIdeas from './GiftIdeas';
+import GiftIdea from './GiftIdea';
 
 const AddListRowForm = styled.form`
   display: flex;
@@ -18,23 +18,50 @@ const AddListRowForm = styled.form`
 `;
 
 class AddListRow extends Component {
-  state = {
-    giftIdeas: {
-      1: {
-        value: ''
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      [props.id]: {
+        giftIdeas: {
+          [uniqid()]: ''
+        }
       }
-    }
-  };
+    };
+  }
+
+
+  // componentDidMount() {
+  //   let localStorageRef = localStorage.getItem('gifts');
+  //   if (localStorageRef) {
+  //     this.setState({
+  //       [this.props.id]: {
+  //         giftIdeas: JSON.parse(localStorageRef)
+  //       }
+  //     });
+  //     return;
+  //   }
+  // }
+
+  // componentDidUpdate(prevState) {
+  //   localStorage.setItem('gifts', JSON.stringify({...prevState.giftIdeas, [this.props.id]: this.state.giftIdeas}));
+  // }
+
+  componentDidUpdate() {
+    const prevState = {...this.props.state}
+    console.log({[this.props.id]: this.state.giftIdeas})
+    localStorage.setItem('gifts', JSON.stringify(this.state[this.props.id].giftIdeas))
+  }
 
   handleAddGift = e => {
     e.preventDefault();
-    const numberGifts = uniqid();
+    const giftId = uniqid();
     this.setState(prev => {
       return {
-        giftIdeas: {
-          ...prev.giftIdeas,
-          [numberGifts]: {
-            value: ''
+        [this.props.id]: {
+          giftIdeas: {
+            ...prev[this.props.id].giftIdeas,
+            [giftId]: ''
           }
         }
       };
@@ -44,32 +71,35 @@ class AddListRow extends Component {
   handleGiftInputChange = (e, idea) => {
     e.preventDefault();
     e.persist();
-    const updatedGiftIdea = {
-      ...this.state.giftIdeas[idea],
-      value: e.target.value
-    };
+    // const updatedGiftIdea = {
+    //   ...this.state.giftIdeas[idea],
+    //   value: e.target.value
+    // };
     this.setState(prev => {
       return {
-        giftIdeas: {
-          ...prev.giftIdeas,
-          [idea]: updatedGiftIdea
+        [this.props.id]: {
+          giftIdeas: {
+            ...prev[this.props.id].giftIdeas,
+            [idea]: e.target.value
+          }
         }
       };
     });
   };
 
-  handleRemoveGift = (e, giftIndex) => {
+  handleRemoveGift = (e, id) => {
     e.preventDefault();
-    const updatedStateItem = Object.keys({ ...this.state.giftIdeas });
-    if (updatedStateItem.length > 1) {
-      updatedStateItem.splice(giftIndex, 1);
-    }
+    const clonedState = { ...this.state[this.props.id].giftIdeas };
+    delete clonedState[id]
     this.setState({
-      giftIdeas: updatedStateItem
+      [this.props.id]: {
+        giftIdeas: clonedState
+      }
     });
   };
 
   render() {
+    const giftIds = Object.keys(this.state[this.props.id].giftIdeas);
     return (
       <AddListRowForm onSubmit={this.props.onSubmit}>
         <input
@@ -100,14 +130,15 @@ class AddListRow extends Component {
           onChange={e => this.props.onChange(e, this.props.id)}
         />
         <div className="AddListRow-giftColumn">
-          {Object.keys(this.state.giftIdeas).map((idea, index) => {
+          {giftIds.map((id) => {
             return (
-              <GiftIdeas
-                key={idea}
-                idea={idea}
+              <GiftIdea
+                key={id}
+                id={id}
+                value={this.state[this.props.id].giftIdeas[id]}
                 onChange={this.handleGiftInputChange}
                 onClick={this.handleRemoveGift}
-                index={index}
+                isRemoveDisabled={giftIds.length <= 1}
               />
             );
           })}

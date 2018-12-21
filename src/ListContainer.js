@@ -32,21 +32,19 @@ class ListContainer extends Component {
     totalSpend: 0
   };
 
-  componentDidMount() {
-    let localStorageRef = localStorage.getItem('people');
-    if (localStorageRef) {
-      console.log('Restoring it!');
-      console.log(JSON.parse(localStorageRef));
-      this.setState({
-        items: JSON.parse(localStorageRef)
-      });
-      return;
-    }
-  }
+  // componentDidMount() {
+  //   let localStoragePeopleRef = localStorage.getItem('people');
+  //   if (localStoragePeopleRef) {
+  //     this.setState({
+  //       items: JSON.parse(localStoragePeopleRef)
+  //     });
+  //     return;
+  //   }
+  // }
 
-  componentDidUpdate() {
-    localStorage.setItem('people', JSON.stringify(this.state.items));
-  }
+  // componentDidUpdate() {
+  //   localStorage.setItem('people', JSON.stringify(this.state.items));
+  // }
 
   handleTotalSpendChange = e => {
     e.preventDefault();
