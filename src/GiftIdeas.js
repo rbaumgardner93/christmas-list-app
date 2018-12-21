@@ -2,9 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Gifts = styled.div`
-
   input {
     width: 150px;
+    padding: 5px;
+    margin-bottom: 0.5rem;
   }
 
   .GiftIdeas-addButton {
@@ -13,18 +14,18 @@ const Gifts = styled.div`
   }
 `;
 
-const GiftIdeas = ({onClick, value}) => {
+const GiftIdeas = ({ onChange, onClick, idea }) => {
   return (
     <Gifts>
-        <input
+      <input
         name="gift"
         placeholder="Gift Ideas"
         type="text"
-        value={value}
+        onChange={e => onChange(e, idea)}
+        value={idea.value}
       />
-      <button onClick={e => onClick(e)} className="GiftIdeas-addButton">+ Add</button>
     </Gifts>
   );
-}
+};
 
 export default GiftIdeas;

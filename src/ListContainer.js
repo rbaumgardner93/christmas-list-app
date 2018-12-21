@@ -45,14 +45,17 @@ class ListContainer extends Component {
   handleInputChange = (e, id) => {
     e.preventDefault();
     e.persist();
-    const updatedItem = { ...this.state.items[id], [e.target.name]: parseFloat(e.target.value).toFixed(2) };
+    const updatedItem = {
+      ...this.state.items[id],
+      [e.target.name]: e.target.value
+    };
     this.setState(prev => {
       return {
         ...prev,
         items: {
           ...prev.items,
           [id]: updatedItem
-        },
+        }
       };
     });
   };
@@ -72,7 +75,7 @@ class ListContainer extends Component {
   };
 
   render() {
-    const totalPlanned = Object.keys(this.state.items).reduce((prev, key) =>  {
+    const totalPlanned = Object.keys(this.state.items).reduce((prev, key) => {
       return prev + Math.abs(this.state.items[key].planned);
     }, 0);
 
@@ -83,7 +86,9 @@ class ListContainer extends Component {
           item={this.state.totalSpend}
           onChange={this.handleTotalSpendChange}
         />
-        <p>Total left to spend: ${parseFloat(leftToSpend).toFixed(2)}</p>
+        <p>
+          Total left to spend: ${parseFloat(leftToSpend.toString()).toFixed(2)}
+        </p>
         <ListRowTitles />
         {Object.keys(this.state.items).map(id => {
           return (
@@ -95,7 +100,11 @@ class ListContainer extends Component {
             />
           );
         })}
-        <button className="ChristmasListContainer-addButton" type="submit" onClick={this.handleAddClick}>
+        <button
+          className="ChristmasListContainer-addButton"
+          type="submit"
+          onClick={this.handleAddClick}
+        >
           + Add Person
         </button>
       </ChristmasListContainer>
